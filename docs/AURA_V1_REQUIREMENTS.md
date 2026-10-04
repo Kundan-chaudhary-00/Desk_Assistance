@@ -31,17 +31,17 @@ All available hardware should still be individually verified during the appropri
 
 The following hardware is required for AURA V1:
 
-* [ ] ESP32
+* [x] ESP32
 * [ ] 3.5-inch touchscreen display
 * [ ] Touch input/controller
-* [ ] DHT22 temperature and humidity sensor
-* [ ] DS3231 real-time clock
-* [ ] MicroSD card/storage
-* [ ] DFPlayer Mini
-* [ ] Speaker
-* [ ] INMP441 microphone
-* [ ] PIR motion sensor
-* [ ] Camera
+* [x] DHT22 temperature and humidity sensor
+* [x] DS3231 real-time clock
+* [x] MicroSD card/storage
+* [x] DFPlayer Mini
+* [x] Speaker
+* [x] INMP441 microphone
+
+* [x] Camera
 
 ---
 
