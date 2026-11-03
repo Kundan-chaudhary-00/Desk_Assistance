@@ -18,10 +18,11 @@ The purpose of freezing the requirements is to clearly define the V1 scope and p
 
 # 2. Current Hardware Availability
 
-All currently required hardware components are available.
+Most required hardware components are available; two are not yet acquired (see below).
 
-* **Missing components:** None
+* **Missing / pending acquisition:** PIR motion sensor, Touch input/controller
 * **Damaged components:** None
+* **Remaining inventory:** ESP32, 3.5" touchscreen display, DHT22, DS3231, MicroSD, DFPlayer Mini, speaker, INMP441 microphone, camera
 
 All available hardware should still be individually verified during the appropriate hardware testing stages of the roadmap.
 
@@ -29,10 +30,10 @@ All available hardware should still be individually verified during the appropri
 
 # 3. Required Hardware
 
-The following hardware is required for AURA V1:
+The following hardware is required for AURA V1 (checked = currently available; unchecked = required but not yet acquired):
 
 * [x] ESP32
-* [ ] 3.5-inch touchscreen display
+* [x] 3.5-inch touchscreen display
 * [ ] Touch input/controller
 * [x] DHT22 temperature and humidity sensor
 * [x] DS3231 real-time clock
@@ -42,6 +43,7 @@ The following hardware is required for AURA V1:
 * [x] INMP441 microphone
 
 * [x] Camera
+* [ ] PIR motion sensor
 
 ---
 
@@ -49,11 +51,11 @@ The following hardware is required for AURA V1:
 
 AURA V1 must include:
 
-* [ ] Wi-Fi connectivity
-* [ ] Cloud AI
-* [ ] Command processing
-* [ ] Decision Engine
-* [ ] Error handling
+* [x] Wi-Fi connectivity
+* [x] Cloud AI
+* [x] Command processing
+* [x] Decision Engine
+* [x] Error handling
 
 ---
 
@@ -61,9 +63,9 @@ AURA V1 must include:
 
 AURA V1 must include:
 
-* [ ] Study Mode
-* [ ] Exhibition Mode
-* [ ] Professional user interface (UI)
+* [x] Study Mode
+* [x] Exhibition Mode
+* [x] Professional user interface (UI)
 
 ---
 
@@ -133,7 +135,7 @@ Day 2 is considered complete when:
 * [x] Navigation is excluded.
 * [x] Obstacle avoidance is excluded.
 * [x] Autonomous movement is excluded.
-* [x] No required hardware is currently missing.
+* [x] Required hardware is fully defined for V1 (acquisition status of PIR/touch tracked in AURA_CURRENT_STATUS.md).
 * [x] No required hardware is currently damaged.
 * [x] V1 scope is frozen.
 
