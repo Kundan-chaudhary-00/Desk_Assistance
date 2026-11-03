@@ -111,17 +111,7 @@ This is the **planned architecture**, not a claim that all these folders current
 | `src/`         | Current firmware source            |
 | `test/`        | Existing PlatformIO test directory |
 
-The following architecture folders are currently **not yet created**:
-
-* `core/`
-* `hardware/`
-* `sensors/`
-* `network/`
-* `ai/`
-* `applications/`
-* `config/`
-
-They will be introduced at the appropriate development stage.
+The architecture folder skeleton is now created (see Section 3): `core/`, `hardware/`, `sensors/`, `network/`, `ai/`, `applications/`, `config/`, and `tests/` all exist as scaffolding. Individual modules are implemented progressively according to the roadmap (Days 8+).
 
 ---
 
