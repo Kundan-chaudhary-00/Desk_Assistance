@@ -71,8 +71,7 @@ AURA/
 │
 ├── sensors/
 │   ├── dht22/
-│   ├── ds3231/
-│   └── pir/
+│   └── ds3231/
 │
 ├── network/
 │   ├── wifi/
@@ -227,8 +226,7 @@ Sensor-specific code will be separated into:
 ```text
 sensors/
 ├── dht22/
-├── ds3231/
-└── pir/
+└── ds3231/
 ```
 
 ### DHT22
@@ -238,10 +236,6 @@ Temperature and humidity.
 ### DS3231
 
 Real-time clock.
-
-### PIR
-
-Motion detection.
 
 ---
 
