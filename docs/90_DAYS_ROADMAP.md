@@ -57,7 +57,6 @@ According to the current AURA onboarding documentation:
 * Speaker/DFPlayer assembled
 * DHT22 assembled
 * DS3231 assembled
-* PIR assembled
 * Buzzer assembled
 * Wi-Fi working
 * Basic UI working
@@ -251,7 +250,6 @@ Define the features that MUST be part of the 90-day prototype.
 * Decision Engine
 * Error handling
 * Study Mode
-* PIR
 * Camera
 * Exhibition Mode
 * Professional UI
@@ -291,8 +289,7 @@ AURA/
 │   └── camera/
 ├── sensors/
 │   ├── dht22/
-│   ├── ds3231/
-│   └── pir/
+│   └── ds3231/
 ├── network/
 │   ├── wifi/
 │   └── api/
@@ -333,7 +330,6 @@ Known interfaces:
 * MicroSD → SPI
 * INMP441 → I2S
 * DFPlayer → UART
-* PIR → GPIO
 * Buzzer → GPIO
 * Camera → TBD
 
@@ -599,18 +595,14 @@ The INMP441 provides digital I2S audio directly to the ESP32.
 
 ---
 
-# DAY 19 — PIR
+# DAY 19 — ESP32-CAM FOUNDATION
 
-Implement:
+Implement the initial ESP32-CAM bench setup:
 
-* motion detection
-* debounce
-* event generation
-* notification
-
-Example:
-
-"Motion detected."
+* verify board power and boot mode
+* capture a test frame
+* record a stable communication approach to the main ESP32
+* log camera availability and failures
 
 ---
 
@@ -627,7 +619,7 @@ MicroSD     ✓
 DFPlayer    ✓
 Speaker     ✓
 INMP441     ✓
-PIR         ✓
+ESP32-CAM   ✓
 Power       ✓
 
 Camera is handled separately.
@@ -799,7 +791,6 @@ SYSTEM TEST
 ├── SD
 ├── Audio
 ├── Microphone
-├── PIR
 ├── Wi-Fi
 └── Camera
 ```
@@ -870,7 +861,6 @@ Display:
 
 Temperature
 Humidity
-Motion
 Time
 
 ---
@@ -1551,7 +1541,6 @@ Check:
 * DFPlayer
 * speaker
 * microphone
-* PIR
 * camera
 
 ---
@@ -1666,8 +1655,7 @@ AURA/
 │   └── camera/
 ├── sensors/
 │   ├── dht22/
-│   ├── ds3231/
-│   └── pir/
+│   └── ds3231/
 ├── network/
 │   ├── wifi/
 │   └── api/
@@ -1754,7 +1742,6 @@ The current architecture documentation already separates input processing, AURA 
 | DHT22                | GPIO      | Temperature/humidity | Required      |
 | DS3231               | I2C       | Time                 | Required      |
 | MicroSD              | SPI       | Storage              | Required      |
-| PIR                  | GPIO      | Motion sensing       | Required      |
 | Buzzer               | GPIO      | Alerts               | Required      |
 | Camera               | TBD       | Vision               | Required      |
 | Battery              | Power     | Portable operation   | Verify        |
@@ -1991,7 +1978,6 @@ Use a clean temporary enclosure while continuing development.
 
 * Temperature
 * Humidity
-* Motion
 * Environmental information
 
 ## Assistant
@@ -2154,7 +2140,6 @@ Run the automatic AURA demo sequence.
 - [ ] DHT22 working
 - [ ] DS3231 working
 - [ ] MicroSD working
-- [ ] PIR working
 - [ ] Camera working
 - [ ] Buzzer working
 - [ ] Power system stable
@@ -2272,7 +2257,7 @@ Develop:
 
 Develop:
 
-* PIR + camera
+* Camera
 * event detection
 * monitoring
 * event logging

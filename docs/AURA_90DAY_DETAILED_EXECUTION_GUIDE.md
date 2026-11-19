@@ -9,7 +9,7 @@
 ## 1. Project Overview
 
 AURA is a stationary AI desk assistant: an ESP32-based, networked, voice + touch + vision enabled desk 
-device that senses its environment (temperature, humidity, motion), plays audio, speaks back, answers via a 
+device that senses its environment (temperature and humidity), plays audio, speaks back, answers via a 
 cloud AI, runs a structured UI, and can study/tutor. V1.0 explicitly excludes movement (wheels/motors/navigation).
 
 ### 1.1 Hardware inventory (V1)
@@ -23,7 +23,6 @@ cloud AI, runs a structured UI, and can study/tutor. V1.0 explicitly excludes mo
 - **DFPlayer** — DFPlayer Mini MP3 module (UART2, RX=16, TX=17) — audio playback.
 - **Speaker** — Speaker + amplifier (PAM8403 class) — voice/music/sound FX.
 - **INMP441** — INMP441 MEMS microphone (I2S, BCLK=26) — voice input.
-- **PIR** — PIR motion sensor (currently missing) — presence detection.
 - **Camera** — Camera module — vision / computer vision.
 - **Wi-Fi** — Wi-Fi (ESP32 internal) — connectivity and cloud AI calls.
 - **AI** — Cloud AI / LLM APIs — language, decision and response intelligence.
@@ -32,8 +31,7 @@ cloud AI, runs a structured UI, and can study/tutor. V1.0 explicitly excludes mo
 - **Power** — Power subsystem — battery, charger, BMS, buck converter, 5V/3.3V rails.
 - **Button** — Physical/touch buttons — interaction input.
 
-> Note: Per `AURA_CURRENT_STATUS.md`, PIR and the touch controller are currently **MISSING**; a charger/battery 
-> configuration discrepancy (multi-cell vs. 1S) is to be reconciled on Day 5. All other components are present.
+> Note: The confirmed ILI9488 SPI touch-display module and ESP32-CAM are available. The 2S2P battery architecture and 5 V buck output are documented in `AURA_POWER_AUDIT.md`.
 
 ### 1.2 Phase map
 
@@ -144,7 +142,6 @@ Define the features that MUST be part of the 90-day prototype.
 - Decision Engine
 - Error handling
 - Study Mode
-- PIR
 - Camera
 - Exhibition Mode
 - Professional UI
@@ -173,7 +170,6 @@ Define the features that MUST be part of the 90-day prototype.
 - **DFPlayer** — DFPlayer Mini MP3 module (UART2, RX=16, TX=17) — audio playback.
 - **Speaker** — Speaker + amplifier (PAM8403 class) — voice/music/sound FX.
 - **INMP441** — INMP441 MEMS microphone (I2S, BCLK=26) — voice input.
-- **PIR** — PIR motion sensor (currently missing) — presence detection.
 - **Camera** — Camera module — vision / computer vision.
 - **Wi-Fi** — Wi-Fi (ESP32 internal) — connectivity and cloud AI calls.
 - **AI** — Cloud AI / LLM APIs — language, decision and response intelligence.
@@ -191,9 +187,59 @@ Define the features that MUST be part of the 90-day prototype.
 **Plan & Tasks:**
 
 Create the following structure:
-```text AURA/ ├── main.cpp ├── core/ │   ├── system/ │   ├── state_machine/ │   ├── decision_engine/ │   ├── command_manager/ │   ├── action_manager/ │   ├── response_manager/ │   ├── memory/ │   └── diagnostics/ ├── hardware/ │   ├── display/ │   ├── touch/ │   ├── audio/ │   ├── microphone/ │   ├── storage/ │   └── camera/ ├── sensors/ │   ├── dht22/ │   ├── ds3231/ │   └── pir/ ├── network/ │   ├── wifi/ │   └── api/ ├── ai/ │   ├── routing/ │   ├── language/ │   ├── speech/ │   └── vision/ ├── applications/ │   ├── assistant/ │   ├── study/ │   ├── entertainment/ │   └── exhibition/ ├── config/ ├── tests/ └── docs/ ```
+```text AURA/ 
+├── main.cpp 
+├── core/ 
+│   
+├── system/ 
+│   
+├── state_machine/ 
+│   
+├── decision_engine/ 
+│   
+├── command_manager/ 
+│   
+├── action_manager/ 
+│   
+├── response_manager/ 
+│   ├── memory/ 
+│   └── diagnostics/ 
+├── hardware/ 
+│   ├── display/ 
+│   ├── touch/ 
+│   ├── audio/ 
+│   ├── microphone/ 
+│   ├── storage/ 
+│   └── camera/ 
+├── sensors/ 
+│   ├── dht22/ 
+│   └── ds3231/ 
+├── network/ 
+│   
+├── wifi/ 
+│   └── api/ 
+├── ai/ 
+│   
+├── routing/ 
+│   
+├── language/ 
+│   
+├── speech/ 
+│   └── vision/ 
+├── applications/ 
+│   
+├── assistant/ 
+│   
+├── study/ 
+│   
+├── entertainment/ 
+│   └── exhibition/ 
+├── config/ 
+├── tests/ 
+└── docs/ 
+```
 
-**Definition of Done:**
+
 
 - Audit evidence recorded (AURA_CURRENT_STATUS.md), V1 scope frozen, architecture & pinmap approved, Git repository initialized.
 
@@ -206,7 +252,6 @@ Create the following structure:
 - **Touch** — Touchscreen controller (currently missing / to be acquired) — input.
 - **DHT22** — DHT22 temperature & humidity sensor — environment monitoring.
 - **DS3231** — DS3231 RTC (I2C, SDA=21, SCL=22) — time/date/alarms.
-- **PIR** — PIR motion sensor (currently missing) — presence detection.
 - **Camera** — Camera module — vision / computer vision.
 - **AI** — Cloud AI / LLM APIs — language, decision and response intelligence.
 
@@ -237,7 +282,6 @@ Known interfaces:
 - MicroSD → SPI
 - INMP441 → I2S
 - DFPlayer → UART
-- PIR → GPIO
 - Buzzer → GPIO
 - Camera → TBD
 Do NOT guess final camera pins.
@@ -259,7 +303,6 @@ AURA_PINMAP_V1.md
 - **SD** — MicroSD (SPI, CS=5) — configuration storage + logs.
 - **DFPlayer** — DFPlayer Mini MP3 module (UART2, RX=16, TX=17) — audio playback.
 - **INMP441** — INMP441 MEMS microphone (I2S, BCLK=26) — voice input.
-- **PIR** — PIR motion sensor (currently missing) — presence detection.
 - **Camera** — Camera module — vision / computer vision.
 - **AI** — Cloud AI / LLM APIs — language, decision and response intelligence.
 - **Buzzer** — Buzzer — boot/feedback/error tones.
@@ -774,21 +817,19 @@ The INMP441 provides digital I2S audio directly to the ESP32.
 
 - Component availability/unknowns (e.g. missing sensor) must be flagged to the current-status log.
 
-### Day 19 — PIR
+### Day 19 — ESP32-CAM FOUNDATION
 
 **Phase:** Phase 2 — Hardware Foundation (Days 8–20)
 
-**Goal / Purpose:** Implement PIR motion detection with debounce, event generation and notification.
+**Goal / Purpose:** Establish reliable ESP32-CAM bench operation before the later camera and computer-vision phase.
 
 **Plan & Tasks:**
 
 Implement:
-- motion detection
-- debounce
-- event generation
-- notification
-Example:
-"Motion detected."
+- verified power and boot sequence
+- test-frame capture
+- camera availability/failure reporting
+- documented communication approach to the main ESP32
 
 **Definition of Done:**
 
@@ -800,7 +841,7 @@ Example:
 
 **Components / Interfaces involved:**
 
-- **PIR** — PIR motion sensor (currently missing) — presence detection.
+- **Camera** — ESP32-CAM vision subsystem — test-frame capture and communication planning.
 
 **Risks / Notes:**
 
@@ -815,8 +856,7 @@ Example:
 **Plan & Tasks:**
 
 Test:
-ESP32       ✓ TFT         ✓ Touch       ✓ DHT22       ✓ DS3231      ✓ MicroSD     ✓ DFPlayer    ✓ Speaker     ✓ INMP441     ✓ PIR         ✓ Power       ✓
-Camera is handled separately.
+ESP32       ✓ TFT         ✓ Touch       ✓ DHT22       ✓ DS3231      ✓ MicroSD     ✓ DFPlayer    ✓ Speaker     ✓ INMP441     ✓ ESP32-CAM   ✓ Power       ✓
 
 **Definition of Done:**
 
@@ -837,7 +877,6 @@ Camera is handled separately.
 - **DFPlayer** — DFPlayer Mini MP3 module (UART2, RX=16, TX=17) — audio playback.
 - **Speaker** — Speaker + amplifier (PAM8403 class) — voice/music/sound FX.
 - **INMP441** — INMP441 MEMS microphone (I2S, BCLK=26) — voice input.
-- **PIR** — PIR motion sensor (currently missing) — presence detection.
 - **Camera** — Camera module — vision / computer vision.
 - **LED** — Status LED — visual state indication.
 - **Power** — Power subsystem — battery, charger, BMS, buck converter, 5V/3.3V rails.
@@ -1157,7 +1196,7 @@ Implement:
 **Plan & Tasks:**
 
 Create:
-```text SYSTEM TEST ├── Display ├── Touch ├── DHT22 ├── RTC ├── SD ├── Audio ├── Microphone ├── PIR ├── Wi-Fi └── Camera ```
+```text SYSTEM TEST ├── Display ├── Touch ├── DHT22 ├── RTC ├── SD ├── Audio ├── Microphone ├── Wi-Fi └── Camera ```
 
 **Definition of Done:**
 
@@ -1172,7 +1211,6 @@ Create:
 - **Touch** — Touchscreen controller (currently missing / to be acquired) — input.
 - **DHT22** — DHT22 temperature & humidity sensor — environment monitoring.
 - **SD** — MicroSD (SPI, CS=5) — configuration storage + logs.
-- **PIR** — PIR motion sensor (currently missing) — presence detection.
 - **Camera** — Camera module — vision / computer vision.
 - **Wi-Fi** — Wi-Fi (ESP32 internal) — connectivity and cloud AI calls.
 
@@ -1318,12 +1356,12 @@ Show:
 
 **Phase:** Phase 4 — UI & Interaction (Days 33–42)
 
-**Goal / Purpose:** Implement the environment dashboard (temperature/humidity/motion readings).
+**Goal / Purpose:** Implement the environment dashboard (temperature, humidity, and time).
 
 **Plan & Tasks:**
 
 Display:
-Temperature Humidity Motion Time
+Temperature Humidity Time
 
 **Definition of Done:**
 
@@ -2770,7 +2808,6 @@ Check:
 - DFPlayer
 - speaker
 - microphone
-- PIR
 - camera
 
 **Definition of Done:**
@@ -2789,7 +2826,6 @@ Check:
 - **SD** — MicroSD (SPI, CS=5) — configuration storage + logs.
 - **DFPlayer** — DFPlayer Mini MP3 module (UART2, RX=16, TX=17) — audio playback.
 - **Speaker** — Speaker + amplifier (PAM8403 class) — voice/music/sound FX.
-- **PIR** — PIR motion sensor (currently missing) — presence detection.
 - **Camera** — Camera module — vision / computer vision.
 - **Power** — Power subsystem — battery, charger, BMS, buck converter, 5V/3.3V rails.
 
@@ -2978,6 +3014,6 @@ reliability, exhibition, documentation).
 - **91–110 Memory + Context:** persistent memory, preferences, conversation history, context, personalization, task memory.
 - **111–130 Advanced Vision:** object detection, person detection, QR recognition, camera processing, multimodal AI.
 - **131–145 Smart Home:** Wi-Fi devices, MQTT, HTTP IoT APIs, relays, smart lights, smart plugs.
-- **146–160 Security:** PIR + camera, event detection/monitoring/logging, alerts.
+- **146–160 Security:** camera, event detection/monitoring/logging, alerts.
 - **161–175 AURA AI:** combine Speech + Vision + Language AI + Memory + Decision Engine into "AURA BRAIN".
 - **176–180 Product Engineering:** casing, thermal design, PCB planning, cable management, serviceability, privacy, security, manufacturing research.
