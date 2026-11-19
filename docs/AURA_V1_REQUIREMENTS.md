@@ -18,9 +18,9 @@ The purpose of freezing the requirements is to clearly define the V1 scope and p
 
 # 2. Current Hardware Availability
 
-Most required hardware components are available; two are not yet acquired (see below).
+Most required hardware components are available. The touchscreen includes integrated touch capability, but its touch-controller IC still requires confirmation during bring-up.
 
-* **Missing / pending acquisition:** PIR motion sensor, Touch input/controller
+* **Missing / pending acquisition:** None recorded
 * **Damaged components:** None
 * **Remaining inventory:** ESP32, 3.5" touchscreen display, DHT22, DS3231, MicroSD, DFPlayer Mini, speaker, INMP441 microphone, camera
 
@@ -43,7 +43,6 @@ The following hardware is required for AURA V1 (checked = currently available; u
 * [x] INMP441 microphone
 
 * [x] Camera
-* [ ] PIR motion sensor
 
 ---
 
@@ -96,7 +95,6 @@ AURA V1 is designed as a **stationary AI Desk Assistant**.
 | DFPlayer Mini        | Required       | High     |
 | Speaker              | Required       | High     |
 | INMP441 Microphone   | Required       | High     |
-| PIR Sensor           | Required       | Medium   |
 | Camera               | Required       | High     |
 | Wi-Fi                | Required       | High     |
 | Cloud AI             | Required       | High     |
@@ -135,7 +133,7 @@ Day 2 is considered complete when:
 * [x] Navigation is excluded.
 * [x] Obstacle avoidance is excluded.
 * [x] Autonomous movement is excluded.
-* [x] Required hardware is fully defined for V1 (acquisition status of PIR/touch tracked in AURA_CURRENT_STATUS.md).
+* [x] Required hardware is fully defined for V1 (display/touch details tracked in AURA_CURRENT_STATUS.md).
 * [x] No required hardware is currently damaged.
 * [x] V1 scope is frozen.
 

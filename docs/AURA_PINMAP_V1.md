@@ -82,7 +82,6 @@ The ESP32-CAM is treated as a separate vision subsystem.
 | GPIO 33 | SD/DOUT | INMP441 | I²S | Input | ASSIGNED |
 | GPIO 27 | DATA | DHT22 | GPIO | Input | ASSIGNED |
 | GPIO 13 | I/O | Buzzer | GPIO | Output | ASSIGNED |
-| GPIO 34 | Motion input | PIR | GPIO | Input-only | RESERVED / CURRENTLY UNUSED |
 
 ---
 
@@ -129,9 +128,9 @@ The main SPI bus is reserved for storage and the future TFT.
 |---|---:|---|
 | MicroSD module | GPIO 5 | Assigned |
 
-### TFT
+### Confirmed TFT and touch interface
 
-The TFT has intentionally been left unresolved at the user's request.
+The selected module is a 3.5-inch ILI9488 touch display. Its board-side signals are confirmed; the final ESP32 GPIO assignments remain intentionally unresolved until the shared SPI wiring is planned.
 
 ```text
 TFT SCK   → TBD
@@ -142,13 +141,11 @@ TFT DC/RS → TBD
 TFT RST   → TBD
 ```
 
-The TFT pins will be finalized after the newly ordered 3.5-inch TFT is physically inspected.
-
-**Do not wire the TFT according to this document until its exact board/interface is verified.**
+The TFT pins will be finalized during the Day 12–14 shared-SPI and touch bring-up.
 
 ### Touch
 
-Touch controller pins are also intentionally left TBD until the ordered TFT is inspected.
+The integrated touch interface is confirmed, but its controller IC and final ESP32 pin assignments require bench verification.
 
 ```text
 Touch SCK  → TBD
@@ -270,27 +267,7 @@ The buzzer module's supply voltage must be verified before final enclosure wirin
 
 ---
 
-# 10. PIR Motion Sensor
-
-The PIR sensor is currently removed from the physical build.
-
-The roadmap still defines PIR as a V1 hardware requirement, therefore it is not permanently deleted from the architecture.
-
-A GPIO is reserved for future use:
-
-```text
-PIR → GPIO 34
-```
-
-### Current status
-
-**RESERVED / UNUSED**
-
-GPIO 34 is input-only on the ESP32 and is therefore suitable as a future digital sensor input, but the PIR is not currently connected.
-
----
-
-# 11. Camera — ESP32-CAM
+# 10. Camera — ESP32-CAM
 
 The project uses the pictured ESP32-CAM board as the vision subsystem.
 
@@ -341,6 +318,30 @@ The roadmap explicitly requires:
 > Do NOT guess final camera pins.
 
 The exact camera communication architecture will be finalized during the camera hardware verification stage.
+
+---
+
+# 11. Confirmed TFT / Touch Module
+
+The selected display is the **3.5-inch ILI9488 SPI touch module** (480 × 320), confirmed from the supplied product page and board image.
+
+| Module signal | Board label | Status |
+|---|---|---|
+| Display SPI clock | SCK | Requires final ESP32 assignment |
+| Display SPI data | SDI (MOSI) | Requires final ESP32 assignment |
+| Display read data | SDO (MISO) | Requires final ESP32 assignment |
+| Display select | CS | Requires final ESP32 assignment |
+| Display data/command | DC/RS | Requires final ESP32 assignment |
+| Display reset | RESET | Requires final ESP32 assignment |
+| Touch clock | T_CLK | Requires final ESP32 assignment |
+| Touch MOSI | T_DIN | Requires final ESP32 assignment |
+| Touch MISO | T_DO | Requires final ESP32 assignment |
+| Touch select | T_CS | Requires final ESP32 assignment |
+| Touch interrupt | T_IRQ | Requires final ESP32 assignment |
+
+The module provides 4-wire SPI and a MicroSD slot. Its supply accepts 3.3–5 V, but its logic I/O is 3.3 V TTL. The display, touch controller, and on-board MicroSD must use separate chip-select lines when sharing SPI.
+
+**Source:** [Robu product page](https://robu.in/product/3-5-inch-spi-50pin-tft-lcd-touch-moduleili9488-driver-480x320-color-screen/), verified 19 November 2026.
 
 ---
 
@@ -428,7 +429,7 @@ They are suitable for inputs but cannot directly drive:
 - display control
 - other output devices
 
-GPIO 34 is therefore reserved only as a possible PIR input.
+GPIO 34 remains unassigned and available only for a future input-only use.
 
 ## Boot/strapping pins
 
@@ -473,7 +474,7 @@ If boot problems occur, the SD chip-select behavior must be investigated before 
 | 27 | DHT22 DATA | ASSIGNED |
 | 32 | Unassigned | AVAILABLE |
 | 33 | INMP441 SD/DOUT | ASSIGNED |
-| 34 | PIR future input | RESERVED |
+| 34 | Unassigned input-only | AVAILABLE INPUT |
 | 35 | Unassigned input-only | AVAILABLE INPUT |
 | 36 | Unassigned input-only | AVAILABLE INPUT |
 | 39 | Unassigned input-only | AVAILABLE INPUT |
@@ -507,10 +508,9 @@ This prevents accidental pin conflicts.
 | UART2 | TX 17 / RX 16 | MP3-TF-16P V3.0 | FROZEN |
 | GPIO | 27 | DHT22 | FROZEN |
 | GPIO | 13 | Buzzer | FROZEN |
-| GPIO | 34 | PIR future input | RESERVED |
-| Camera | TBD | ESP32-CAM | TBD |
-| TFT | TBD | 3.5" ILI9486 | TBD |
-| Touch | TBD | XPT2046 / actual ordered controller | TBD |
+| Camera | TBD | ESP32-CAM | Communication architecture TBD |
+| TFT | Module interface confirmed | 3.5" ILI9488 | ESP32 assignments TBD |
+| Touch | Module interface confirmed | Integrated SPI touch | ESP32 assignments TBD |
 
 ---
 
@@ -519,8 +519,8 @@ This prevents accidental pin conflicts.
 | Device | CS GPIO | Status |
 |---|---:|---|
 | MicroSD | GPIO 5 | Assigned |
-| TFT | TBD | Waiting for ordered TFT verification |
-| Touch | TBD | Waiting for ordered TFT verification |
+| TFT | TBD | ILI9488 module confirmed; assign during Day 12–14 bring-up |
+| Touch | TBD | Integrated touch confirmed; controller/pins to be verified during Day 14 |
 
 Each SPI device must have its own chip-select line.
 
@@ -532,7 +532,6 @@ Only the currently verified MicroSD CS is frozen.
 
 | Source | GPIO | Type | Status |
 |---|---:|---|---|
-| PIR | GPIO 34 | Digital input | Reserved |
 | Touch IRQ | TBD | Interrupt/input | TFT verification required |
 | DS3231 SQW | Unassigned | Optional interrupt | Not required for V1 |
 | Camera events | TBD | Vision subsystem | TBD |
@@ -547,11 +546,10 @@ Only the currently verified MicroSD CS is frozen.
 
 ## Known unresolved areas
 
-1. TFT SPI/control pins
-2. Touch controller pins
+1. TFT SPI/control-pin assignments
+2. Touch-controller pin assignments
 3. ESP32-CAM communication method
 4. ESP32-CAM final camera interface allocation
-5. Final battery/power architecture
 
 These are deliberately left unresolved rather than guessed.
 
@@ -571,9 +569,9 @@ They are input-only.
 
 SCK/MISO/MOSI may be shared, but each device needs an independent CS.
 
-### Rule 4 — TFT remains TBD
+### Rule 4 — Assign the confirmed TFT only after wiring review
 
-Do not assume the previous photographed TFT has the same interface as the newly ordered TFT.
+The ILI9488 module interface is confirmed, but its ESP32 GPIO assignments must be selected without conflicts during the display and touch bring-up.
 
 ### Rule 5 — Camera remains TBD
 

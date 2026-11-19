@@ -11,7 +11,7 @@ AURA V1.0 is **not** a mobile robot. Wheels, motors, navigation, obstacle avoida
 - PlatformIO board: `esp32dev`
 - Framework: Arduino
 
-The documented V1 hardware plan includes a TFT/touchscreen, DHT22, DS3231 RTC, MicroSD, DFPlayer-compatible audio module, speaker/amplifier, INMP441 microphone, PIR sensor, ESP32-CAM, buzzer, and a 2S2P battery system.
+The documented V1 hardware plan includes an ILI9488 TFT/touchscreen, DHT22, DS3231 RTC, MicroSD, DFPlayer-compatible audio module, speaker/amplifier, INMP441 microphone, ESP32-CAM, buzzer, and a 2S2P battery system.
 
 ## Repository layout
 
