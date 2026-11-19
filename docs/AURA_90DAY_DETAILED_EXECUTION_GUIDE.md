@@ -191,9 +191,60 @@ Define the features that MUST be part of the 90-day prototype.
 **Plan & Tasks:**
 
 Create the following structure:
-```text AURA/ ├── main.cpp ├── core/ │   ├── system/ │   ├── state_machine/ │   ├── decision_engine/ │   ├── command_manager/ │   ├── action_manager/ │   ├── response_manager/ │   ├── memory/ │   └── diagnostics/ ├── hardware/ │   ├── display/ │   ├── touch/ │   ├── audio/ │   ├── microphone/ │   ├── storage/ │   └── camera/ ├── sensors/ │   ├── dht22/ │   ├── ds3231/ │   └── pir/ ├── network/ │   ├── wifi/ │   └── api/ ├── ai/ │   ├── routing/ │   ├── language/ │   ├── speech/ │   └── vision/ ├── applications/ │   ├── assistant/ │   ├── study/ │   ├── entertainment/ │   └── exhibition/ ├── config/ ├── tests/ └── docs/ ```
+```text AURA/ 
+├── main.cpp 
+├── core/ 
+│   
+├── system/ 
+│   
+├── state_machine/ 
+│   
+├── decision_engine/ 
+│   
+├── command_manager/ 
+│   
+├── action_manager/ 
+│   
+├── response_manager/ 
+│   ├── memory/ 
+│   └── diagnostics/ 
+├── hardware/ 
+│   ├── display/ 
+│   ├── touch/ 
+│   ├── audio/ 
+│   ├── microphone/ 
+│   ├── storage/ 
+│   └── camera/ 
+├── sensors/ 
+│   ├── dht22/ 
+│   ├── ds3231/ 
+│   └── pir/ 
+├── network/ 
+│   
+├── wifi/ 
+│   └── api/ 
+├── ai/ 
+│   
+├── routing/ 
+│   
+├── language/ 
+│   
+├── speech/ 
+│   └── vision/ 
+├── applications/ 
+│   
+├── assistant/ 
+│   
+├── study/ 
+│   
+├── entertainment/ 
+│   └── exhibition/ 
+├── config/ 
+├── tests/ 
+└── docs/ 
+```
 
-**Definition of Done:**
+
 
 - Audit evidence recorded (AURA_CURRENT_STATUS.md), V1 scope frozen, architecture & pinmap approved, Git repository initialized.
 
